@@ -1,0 +1,39 @@
+{% extends 'base.html' %} {% block content %}
+<h1>{{ student.name }}'s Profile</h1>
+<h2>Enrolled Courses</h2>
+<ul>
+  {% for course in student.courses.all %}
+    <li>{{ course.title }}</li>
+  {% endfor %}
+</ul>
+
+<h2>Upcoming Classes</h2>
+<ul>
+  {% for class in classes %}
+  <li>
+    <h3>{{ class.course.title }}</h3>
+    <div>
+        {% for teacher in class.course.teachers.all %}
+            <span style="font-weight: bold">{{ teacher.name }}</span>
+        {% endfor %}
+    </div>
+    <p>{{ class.date }}: {{ class.start_time }} - {{ class.end_time }}</li></p>
+    <h4>Students</h4>
+    <ul>
+        {% for class_student in class.course.students.all %}
+            {% if class_student.id != student.id %}
+            {{ class_student.name }}
+            {% endif %}
+            
+        {% endfor %}
+    </ul>
+  {% endfor %}
+</ul>
+
+<h2>All Courses</h2>
+<ul>
+  {% for course in courses %} {% if not course in student.courses.all %}
+  <li>{{course.title}}</li>
+  {% endif %} {% endfor %}
+</ul>
+{% endblock %}
