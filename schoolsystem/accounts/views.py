@@ -9,10 +9,12 @@ def student_profile(request, student_id):
     courses = Course.objects.all()
     classes = Class.objects.filter(course__in=student.courses.all(), date__gte=datetime.now()).order_by('date')
 
+    print(student.profile_picture)
+
     context = {
         'student': student,
         'courses': courses,
-        'classes': classes
+        'classes': classes,
     }
 
     return render(request, "accounts/student_profile.html", context)

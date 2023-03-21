@@ -1,9 +1,26 @@
-{% extends 'base.html' %} {% block content %}
+
+
+{% extends 'base.html' %}
+{% load get_item %}
+ {% block content %}
 <h1>{{ student.name }}'s Profile</h1>
+
+<img width="200" src="{{ student.profile_picture.url }}" />
+
 <h2>Enrolled Courses</h2>
 <ul>
   {% for course in student.courses.all %}
-    <li>{{ course.title }}</li>
+    <li>
+        <h4>{{ course.title }}</h4>
+        <ul>
+            {% for result in course.results.all %}
+                {% if result.student == student %}
+                    <p>{{ forloop.counter }}. {{ result.score }}</p>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <p>Average: {{ student.course_averages|get_item:course.course_code }}</p>
+    </li>
   {% endfor %}
 </ul>
 

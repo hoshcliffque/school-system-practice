@@ -21,3 +21,6 @@ class Result(models.Model):
     student = models.ForeignKey("accounts.Student", on_delete=models.CASCADE, related_name="results")
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="results")
     score = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.course.title} - {self.student.name}: {self.score}"
